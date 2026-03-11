@@ -2,20 +2,42 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  todos: defineTable({
-    text: v.string(),
-    isCompleted: v.boolean(),
+  admins: defineTable({
+    username: v.string(),
+    pin: v.string(),
   }),
-  tables: defineTable({
-    label: v.string(),
-    capacity: v.number(),
-    status: v.string(),
+  menus: defineTable({
+    name: v.string(),
+    category: v.string(),
+    date: v.string(),
+    portions: v.number(),
+    isAvailable: v.boolean(),
   }),
-  reservations: defineTable({
-    guestName: v.string(),
-    partySize: v.number(),
-    time: v.number(),
-    tableId: v.optional(v.id("tables")),
-    notes: v.optional(v.string()),
+  stocks: defineTable({
+    itemName: v.string(),
+    quantity: v.number(),
+    unit: v.string(),
+    date: v.string(),
+  }),
+  mealCards: defineTable({
+    studentName: v.string(),
+    studentId: v.string(),
+    category: v.string(),
+    date: v.string(),
+  }),
+  ratings: defineTable({
+    menuName: v.string(),
+    score: v.number(),
+    date: v.string(),
+  }),
+  feedbacks: defineTable({
+    message: v.string(),
+    date: v.string(),
+    studentName: v.optional(v.string()),
+  }),
+  suggestions: defineTable({
+    message: v.string(),
+    date: v.string(),
+    studentName: v.optional(v.string()),
   }),
 });

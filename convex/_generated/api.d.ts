@@ -8,8 +8,14 @@
  * @module
  */
 
-import type * as reservations from "../reservations.js";
-import type * as todos from "../todos.js";
+import type * as admins from "../admins.js";
+import type * as feedbacks from "../feedbacks.js";
+import type * as mealCards from "../mealCards.js";
+import type * as menus from "../menus.js";
+import type * as ratings from "../ratings.js";
+import type * as stats from "../stats.js";
+import type * as stocks from "../stocks.js";
+import type * as suggestions from "../suggestions.js";
 
 import type {
   ApiFromModules,
@@ -18,8 +24,14 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  reservations: typeof reservations;
-  todos: typeof todos;
+  admins: typeof admins;
+  feedbacks: typeof feedbacks;
+  mealCards: typeof mealCards;
+  menus: typeof menus;
+  ratings: typeof ratings;
+  stats: typeof stats;
+  stocks: typeof stocks;
+  suggestions: typeof suggestions;
 }>;
 
 /**

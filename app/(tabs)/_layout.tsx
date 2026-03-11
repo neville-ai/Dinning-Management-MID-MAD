@@ -15,12 +15,19 @@ const TabsLayout = () => {
           backgroundColor: colors.surface,
           borderTopWidth: 1,
           borderTopColor: colors.border,
-          height: 90,
-          paddingBottom: 30,
-          paddingTop: 10,
+          height: 76,
+          paddingBottom: 12,
+          paddingTop: 8,
+          paddingHorizontal: 8,
+        },
+        tabBarItemStyle: {
+          flex: 1,
+        },
+        tabBarIconStyle: {
+          marginTop: 2,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: "600",
         },
         headerShown: false,

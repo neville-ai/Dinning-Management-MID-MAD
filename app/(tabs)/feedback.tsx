@@ -1,26 +1,85 @@
 import useTheme from "@/hooks/useTheme";
+import { api } from "@/convex/_generated/api";
+import { useMutation, useQuery } from "convex/react";
 import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const FeedbackScreen = () => {
   const { colors } = useTheme();
+  const today = new Date().toISOString().slice(0, 10);
+  const feedbacks = useQuery(api.feedbacks.getFeedbacksByDate, { date: today }) ?? [];
+  const addFeedback = useMutation(api.feedbacks.addFeedback);
+  const [message, setMessage] = React.useState("");
+  const [studentName, setStudentName] = React.useState("");
+
+  const handleSubmit = async () => {
+    if (!message.trim()) return;
+    await addFeedback({
+      message: message.trim(),
+      date: today,
+      studentName: studentName.trim() ? studentName.trim() : undefined,
+    });
+    setMessage("");
+    setStudentName("");
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Feedback</Text>
-      <Text style={[styles.subtitle, { color: colors.textMuted }]}>
-        Kirim feedback harian dari mahasiswa.
-      </Text>
+      <View style={styles.header}>
+        <Text style={[styles.title, { color: colors.text }]}>Feedback</Text>
+        <Text style={[styles.subtitle, { color: colors.textMuted }]}>
+          Kirim feedback harian dari mahasiswa.
+        </Text>
+      </View>
 
-      <TextInput
-        placeholder="Tuliskan feedback kamu..."
-        placeholderTextColor={colors.textMuted}
-        multiline
-        style={[
-          styles.input,
-          { backgroundColor: colors.backgrounds.input, color: colors.text, borderColor: colors.border },
-        ]}
-      />
+      <View style={styles.form}>
+        <Text style={[styles.label, { color: colors.textMuted }]}>Nama (opsional)</Text>
+        <TextInput
+          placeholder="Nama mahasiswa"
+          placeholderTextColor={colors.textMuted}
+          value={studentName}
+          onChangeText={setStudentName}
+          style={[
+            styles.input,
+            styles.inputSmall,
+            { backgroundColor: colors.backgrounds.input, color: colors.text, borderColor: colors.border },
+          ]}
+        />
+        <Text style={[styles.label, { color: colors.textMuted }]}>Pesan</Text>
+        <TextInput
+          placeholder="Tuliskan feedback kamu..."
+          placeholderTextColor={colors.textMuted}
+          multiline
+          value={message}
+          onChangeText={setMessage}
+          style={[
+            styles.input,
+            { backgroundColor: colors.backgrounds.input, color: colors.text, borderColor: colors.border },
+          ]}
+        />
+        <TouchableOpacity style={[styles.button, { backgroundColor: colors.primary }]} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Kirim Feedback</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.list}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Feedback Hari Ini</Text>
+        {feedbacks.length === 0 ? (
+          <Text style={[styles.emptyText, { color: colors.textMuted }]}>Belum ada feedback hari ini.</Text>
+        ) : (
+          feedbacks.map((item) => (
+            <View
+              key={item._id}
+              style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+            >
+              <Text style={[styles.cardTitle, { color: colors.text }]}>
+                {item.studentName || "Mahasiswa"}
+              </Text>
+              <Text style={[styles.cardMeta, { color: colors.textMuted }]}>{item.message}</Text>
+            </View>
+          ))
+        )}
+      </View>
     </View>
   );
 };
@@ -30,9 +89,12 @@ export default FeedbackScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 60,
-    gap: 10,
+    paddingHorizontal: 22,
+    paddingTop: 50,
+    gap: 16,
+  },
+  header: {
+    gap: 6,
   },
   title: {
     fontSize: 26,
@@ -41,12 +103,57 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
   },
+  form: {
+    gap: 10,
+  },
+  list: {
+    gap: 10,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: "600",
+    textTransform: "uppercase",
+  },
   input: {
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
     minHeight: 120,
-    marginTop: 12,
+    textAlignVertical: "top",
+  },
+  inputSmall: {
+    minHeight: 44,
+    textAlignVertical: "center",
+  },
+  button: {
+    marginTop: 8,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontWeight: "600",
+  },
+  card: {
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 14,
+    gap: 6,
+  },
+  cardTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  cardMeta: {
+    fontSize: 13,
+  },
+  emptyText: {
+    fontSize: 13,
   },
 });
