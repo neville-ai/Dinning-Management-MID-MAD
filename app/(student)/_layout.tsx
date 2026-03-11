@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
-const TabsLayout = () => {
+const StudentTabsLayout = () => {
   const { colors } = useTheme();
 
   return (
@@ -13,21 +13,32 @@ const TabsLayout = () => {
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
           backgroundColor: colors.surface,
-          borderTopWidth: 1,
-          borderTopColor: colors.border,
-          height: 76,
-          paddingBottom: 12,
+          borderTopWidth: 0,
+          height: 70,
+          paddingBottom: 8,
           paddingTop: 8,
-          paddingHorizontal: 8,
+          paddingHorizontal: 10,
+          position: "absolute",
+          bottom: 24,
+          left: 20,
+          right: 20,
+          borderRadius: 24,
+          shadowColor: colors.shadow,
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.1,
+          shadowRadius: 15,
+          elevation: 5,
         },
         tabBarItemStyle: {
           flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
         },
         tabBarIconStyle: {
           marginTop: 2,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: "600",
         },
         headerShown: false,
@@ -36,13 +47,10 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="speedometer-outline" size={size} color={color} />
-          ),
+          title: "Home",
+          href: null,
         }}
       />
-
       <Tabs.Screen
         name="menu"
         options={{
@@ -52,7 +60,6 @@ const TabsLayout = () => {
           ),
         }}
       />
-
       <Tabs.Screen
         name="ratings"
         options={{
@@ -62,76 +69,39 @@ const TabsLayout = () => {
           ),
         }}
       />
-
       <Tabs.Screen
         name="feedback"
         options={{
           title: "Feedback",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubble-outline" size={size} color={color} />
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="stock"
-        options={{
-          title: "Stock",
-          tabBarButton: () => null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="stats"
-        options={{
-          title: "Stats",
-          tabBarButton: () => null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="feedback-admin"
-        options={{
-          title: "Feedback Admin",
-          tabBarButton: () => null,
-        }}
-      />
-
       <Tabs.Screen
         name="suggestions"
         options={{
-          title: "Suggestions",
-          tabBarButton: () => null,
+          title: "Saran",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="mail-outline" size={size} color={color} />
+          ),
         }}
       />
-
-      <Tabs.Screen
-        name="suggestions-admin"
-        options={{
-          title: "Suggestions Admin",
-          tabBarButton: () => null,
-        }}
-      />
-
       <Tabs.Screen
         name="meal-card"
         options={{
-          title: "Meal Card",
-          tabBarButton: () => null,
+          title: "Kartu",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="id-card-outline" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
   );
 };
 
-export default TabsLayout;
+export default StudentTabsLayout;

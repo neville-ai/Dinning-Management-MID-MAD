@@ -8,21 +8,21 @@ export default defineSchema({
   }),
   menus: defineTable({
     name: v.string(),
-    category: v.string(),
+    description: v.string(),
+    price: v.optional(v.number()),
     date: v.string(),
-    portions: v.number(),
-    isAvailable: v.boolean(),
   }),
   stocks: defineTable({
     itemName: v.string(),
-    quantity: v.number(),
-    unit: v.string(),
+    quantity: v.string(),
+    expiryDate: v.string(),
     date: v.string(),
   }),
   mealCards: defineTable({
     studentName: v.string(),
     studentId: v.string(),
     category: v.string(),
+    status: v.string(),
     date: v.string(),
   }),
   ratings: defineTable({
@@ -39,5 +39,10 @@ export default defineSchema({
     message: v.string(),
     date: v.string(),
     studentName: v.optional(v.string()),
+  }),
+  students: defineTable({
+    name: v.string(),
+    studentId: v.string(),
+    category: v.string(), // "Asrama" or "Outsider"
   }),
 });

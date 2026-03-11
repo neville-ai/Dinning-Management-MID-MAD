@@ -14,10 +14,9 @@ export const getMenusByDate = query({
 export const addMenu = mutation({
   args: {
     name: v.string(),
-    category: v.string(),
+    description: v.string(),
+    price: v.optional(v.number()),
     date: v.string(),
-    portions: v.number(),
-    isAvailable: v.boolean(),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("menus", args);
@@ -28,10 +27,9 @@ export const updateMenu = mutation({
   args: {
     id: v.id("menus"),
     name: v.optional(v.string()),
-    category: v.optional(v.string()),
+    description: v.optional(v.string()),
+    price: v.optional(v.number()),
     date: v.optional(v.string()),
-    portions: v.optional(v.number()),
-    isAvailable: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
     const { id, ...rest } = args;

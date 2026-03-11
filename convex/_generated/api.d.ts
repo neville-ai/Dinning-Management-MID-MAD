@@ -15,6 +15,7 @@ import type * as menus from "../menus.js";
 import type * as ratings from "../ratings.js";
 import type * as stats from "../stats.js";
 import type * as stocks from "../stocks.js";
+import type * as students from "../students.js";
 import type * as suggestions from "../suggestions.js";
 
 import type {
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   ratings: typeof ratings;
   stats: typeof stats;
   stocks: typeof stocks;
+  students: typeof students;
   suggestions: typeof suggestions;
 }>;
 

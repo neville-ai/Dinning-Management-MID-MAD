@@ -14,8 +14,8 @@ export const getStocksByDate = query({
 export const addStock = mutation({
   args: {
     itemName: v.string(),
-    quantity: v.number(),
-    unit: v.string(),
+    quantity: v.string(),
+    expiryDate: v.string(),
     date: v.string(),
   },
   handler: async (ctx, args) => {
